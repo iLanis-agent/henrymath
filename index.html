@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Henry Math - inductor arithmetic</title>
+<style>
+  :root { --accent:#7a2e3a; --ink:#2b1216; --paper:#faf5f5; --soft:#f2e4e4; }
+  * { box-sizing:border-box; margin:0; }
+  body { font-family:Georgia, "Times New Roman", serif; background:var(--paper); color:var(--ink); line-height:1.55; }
+  main { max-width:660px; margin:0 auto; }
+  .boundary { background:#fdeaea; border-left:6px solid #b03030; color:#5c1c1c; border-radius:6px; padding:1rem 1.1rem; }
+  .boundary strong { display:block; margin-bottom:.3rem; }
+  body { padding:2.5rem 1.2rem; }
+  h1 { font-size:2.2rem; color:var(--accent); }
+  p.lede { font-size:1.12rem; margin:.9rem 0 1.6rem; }
+  .boundary { margin-bottom:1.6rem; }
+  section { background:var(--soft); border-left:5px solid var(--accent); border-radius:6px; padding:1.1rem 1.2rem; margin-bottom:1.2rem; }
+  h2 { font-size:1.18rem; margin-bottom:.5rem; }
+  section p { font-size:.98rem; }
+  a.btn { display:inline-block; margin-top:1.4rem; background:var(--accent); color:#fff; text-decoration:none; padding:.8rem 1.6rem; border-radius:999px; font-size:1.05rem; }
+  footer { margin-top:2.2rem; font-size:.85rem; color:#8f6a6a; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Henry Math</h1>
+  <p class="lede">A 100 µH inductor carrying 2 A links 200 µWb of flux and stores 0.2 mJ. Two in parallel act like 31.97 µH and split the current in inverse proportion.</p>
+  <div class="boundary">
+    <strong>Boundary: arithmetic only</strong>
+    Henry Math works out inductance, currents, flux and stored energy from the numbers you type. The inductances and currents are yours to measure or read off your own circuit. It treats every inductor as ideal, so it has not seen your circuit and does not know the core, saturation, resistance, heat or insulation, and it gives no verdict that an inductor, a winding or a supply is adequate or safe. A charged inductor can bite when its circuit opens; every number here is your own entry.
+  </div>
+  <p class="lede" style="font-size:1rem">Starting examples: 100 µH at 2 A, and a 100 µH with a 47 µH in series and in parallel.</p>
+  <section>
+    <h2>The energy truth</h2>
+    <p>A 100 µH inductor carrying 2 A links 200 µWb of flux and stores 0.2 mJ of energy.</p>
+  </section>
+  <section>
+    <h2>The series truth</h2>
+    <p>100 µH and 47 µH in series act like 147 µH. At 2 A the pair stores 0.29 mJ, with 0.2 mJ in the 100 µH one and 0.09 mJ in the 47 µH one.</p>
+  </section>
+  <section>
+    <h2>The parallel truth</h2>
+    <p>100 µH and 47 µH in parallel act like 31.97 µH. A 2 A total splits into 0.64 A in the 100 µH one and 1.36 A in the 47 µH one.</p>
+  </section>
+  <a class="btn" href="app.html">Run your numbers</a>
+  <footer>Henry Math is exact arithmetic over the numbers you enter, nothing more.</footer>
+</main>
+</body>
+</html>
