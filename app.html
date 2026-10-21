@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Henry Math - app</title>
+<style>
+  :root { --accent:#7a2e3a; --ink:#2b1216; --paper:#faf5f5; --soft:#f2e4e4; }
+  * { box-sizing:border-box; margin:0; }
+  body { font-family:Georgia, "Times New Roman", serif; background:var(--paper); color:var(--ink); line-height:1.55; }
+  main { max-width:660px; margin:0 auto; }
+  .boundary { background:#fdeaea; border-left:6px solid #b03030; color:#5c1c1c; border-radius:6px; padding:1rem 1.1rem; }
+  .boundary strong { display:block; margin-bottom:.3rem; }
+  body { padding:2rem 1.2rem; }
+  h1 { font-size:1.8rem; color:var(--accent); }
+  .boundary { margin:1rem 0 1.4rem; }
+  .panel { background:var(--soft); border-left:5px solid var(--accent); border-radius:6px; padding:1rem 1.1rem; margin-bottom:1.1rem; }
+  h2 { font-size:1.1rem; margin-bottom:.6rem; }
+  p.note { font-size:.9rem; margin-bottom:.4rem; }
+  label { display:block; font-size:.9rem; margin:.45rem 0 .1rem; }
+  input { width:100%; padding:.45rem .55rem; font-size:1rem; border:1px solid #d3aaaa; border-radius:6px; background:#fff; color:var(--ink); }
+  .row2 { display:grid; grid-template-columns:1fr 1fr; gap:.6rem; }
+  .row3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:.6rem; }
+  .out { margin-top:.7rem; font-size:.98rem; background:#fff; border:1px dashed #d3aaaa; border-radius:6px; padding:.6rem .7rem; min-height:2.4rem; overflow-wrap:anywhere; }
+  .out.err { border-color:#b03030; color:#8a1f1f; }
+  footer { margin-top:1.8rem; font-size:.85rem; color:#8f6a6a; }
+  a { color:var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Henry Math</h1>
+  <div class="boundary">
+    <strong>Boundary: arithmetic only</strong>
+    This page works out inductance, currents, flux and stored energy from the numbers you type. The inductances and currents are yours to measure or read off your own circuit. It treats every inductor as ideal, so it has not seen your circuit and does not know the core, saturation, resistance, heat or insulation, and it gives no verdict that an inductor, a winding or a supply is adequate or safe. A charged inductor can bite when its circuit opens; every number here is your own entry.
+  </div>
+
+  <div class="panel">
+    <h2>The energy truth</h2>
+    <p class="note">Flux linkage and stored energy for one inductor. Inductance in µH, current in A.</p>
+    <div class="row3">
+      <div><label for="l">Inductance (µH)</label><input id="l" type="text" value="100"></div>
+      <div><label for="i">Current (A)</label><input id="i" type="text" value="2"></div>
+    </div>
+    <div class="out" id="a-out"></div>
+  </div>
+
+  <div class="panel">
+    <h2>The series truth</h2>
+    <p class="note">Two inductors in series add up, and the stored energy splits in proportion.</p>
+    <div class="row3">
+      <div><label for="l1">First (µH)</label><input id="l1" type="text" value="100"></div>
+      <div><label for="l2">Second (µH)</label><input id="l2" type="text" value="47"></div>
+      <div><label for="si">Current (A)</label><input id="si" type="text" value="2"></div>
+    </div>
+    <div class="out" id="b-out"></div>
+  </div>
+
+  <div class="panel">
+    <h2>The parallel truth</h2>
+    <p class="note">Two inductors in parallel shrink, and the current splits in inverse proportion.</p>
+    <div class="row3">
+      <div><label for="p1">First (µH)</label><input id="p1" type="text" value="100"></div>
+      <div><label for="p2">Second (µH)</label><input id="p2" type="text" value="47"></div>
+      <div><label for="pi">Total current (A)</label><input id="pi" type="text" value="2"></div>
+    </div>
+    <div class="out" id="c-out"></div>
+  </div>
+
+  <footer>Henry Math is exact arithmetic over the numbers you enter. <a href="index.html">Why it exists</a>.</footer>
+</main>
+<script src="engine.js"></script>
+<script>
+  function show(id, fn) {
+    const out = document.getElementById(id);
+    try { out.textContent = fn(); out.classList.remove("err"); }
+    catch (e) { out.textContent = e.message; out.classList.add("err"); }
+  }
+  function recalc() {
+    const v = (id) => document.getElementById(id).value;
+    show("a-out", () => energyTruth(v("l"), v("i")));
+    show("b-out", () => seriesTruth(v("l1"), v("l2"), v("si")));
+    show("c-out", () => parallelTruth(v("p1"), v("p2"), v("pi")));
+  }
+  document.querySelectorAll("input").forEach((el) => {
+    el.addEventListener("input", recalc);
+    el.addEventListener("change", recalc);
+  });
+  recalc();
+</script>
+</body>
+</html>
